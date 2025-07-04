@@ -2,6 +2,8 @@
 
 ShopCraft is a feature-rich shopping application built with Flutter, offering seamless user authentication with Supabase, multi-language support, and an intuitive shopping experience.
 
+*********please use active mail to signin*************
+
 ## Features
 
 - **Multi-Language Support**: Fully localized in English & Arabic
