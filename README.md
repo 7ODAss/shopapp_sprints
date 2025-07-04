@@ -1,16 +1,13 @@
 # shop_app_sprints
 
-A new Flutter project.
+ShopCraft is a feature-rich shopping application built with Flutter, offering seamless user authentication with Supabase, multi-language support, and an intuitive shopping experience.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Multi-Language Support**: Fully localized in English & Arabic
+- **Secure Authentication**: Sign up & login with Supabase
+- **State Management**: Implemented Cubits for all major features & Clear division between business logic and UI
+- **Modern UI**: Clean, responsive interface with smooth animations
+- **Product Browsing**: Featured products, collections, and hot deals
+- **Shopping Cart**: Add items to cart with instant feedback
+- **RTL Support**: Full Arabic layout with right-to-left alignment
