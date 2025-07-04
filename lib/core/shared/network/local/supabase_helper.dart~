@@ -1,0 +1,11 @@
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+class SupaBaseHelper {
+  static Future<void> init() async {
+    Supabase.initialize(
+      url: 'https://cvtjxfvnrxxitjnfxhrn.supabase.co',
+      anonKey:
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2dGp4ZnZucnh4aXRqbmZ4aHJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTExNDI0MzcsImV4cCI6MjA2NjcxODQzN30.LInhllN2_ck4nXJs0te3f65e4jA3TjVTy3MoklN3oDg",
+    );
+  }
+}

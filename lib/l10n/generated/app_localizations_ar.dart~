@@ -1,0 +1,85 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Arabic (`ar`).
+class AppLocalizationsAr extends AppLocalizations {
+  AppLocalizationsAr([String locale = 'ar']) : super(locale);
+
+  @override
+  String get appTitle => 'تطبيق التسوق';
+
+  @override
+  String get appDescription => 'تجربة التسوق المتميزة الخاصة بك';
+
+  @override
+  String get signUp => 'التسجيل';
+
+  @override
+  String get signIn => 'تسجيل الدخول';
+
+  @override
+  String get Welcome_Back => 'مرحبًا بعودتك';
+
+  @override
+  String get fullName => 'الاسم الكامل';
+
+  @override
+  String get email => 'البريد الإلكتروني';
+
+  @override
+  String get password => 'كلمة المرور';
+
+  @override
+  String get confirmPassword => 'تأكيد كلمة المرور';
+
+  @override
+  String get submit => 'إرسال';
+
+  @override
+  String get success => 'نجاح';
+
+  @override
+  String get accountCreated => 'تم إنشاء الحساب بنجاح';
+
+  @override
+  String get signInSuccess => 'تم تسجيل الدخول بنجاح';
+
+  @override
+  String get close => 'إغلاق';
+
+  @override
+  String get nameRequired => 'مطلوب اسم';
+
+  @override
+  String get nameCapitalize => 'يجب أن تكون الحرف الأول كبير';
+
+  @override
+  String get emailRequired => 'البريد الإلكتروني مطلوب';
+
+  @override
+  String get emailInvalid => 'بريد إلكتروني غير صالح';
+
+  @override
+  String get passwordRequired => 'كلمة المرور مطلوبة';
+
+  @override
+  String get passwordLength => 'يجب أن تكون كلمة المرور 6 أحرف على الأقل';
+
+  @override
+  String get passwordMatch => 'يجب أن تتطابق كلمات المرور';
+
+  @override
+  String get ourProducts => 'منتجاتنا';
+
+  @override
+  String get allProducts => 'جميع المنتجات';
+
+  @override
+  String get hotOffers => 'العروض الساخنة';
+
+  @override
+  String get itemAdded => 'تمت إضافة العنصر إلى السلة';
+}

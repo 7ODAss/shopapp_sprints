@@ -1,0 +1,9 @@
+abstract class ShopState{}
+
+class ShopInitial extends ShopState{}
+
+class ChangePage extends ShopState{}
+
+class NextPage extends ShopState{}
+
+class PreviousPage extends ShopState{}

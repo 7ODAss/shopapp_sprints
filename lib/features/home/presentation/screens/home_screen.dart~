@@ -1,0 +1,251 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop_app_sprints/features/home/presentation/widgets/arrow_button.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:shop_app_sprints/l10n/generated/app_localizations.dart'; // Add this import
+
+import '../../../../core/shared/controller/cubit.dart';
+import '../controller/cubit.dart';
+import '../controller/state.dart';
+import '../widgets/build_offers.dart';
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final lang = Directionality.of(context) == TextDirection.rtl;
+    return BlocProvider(
+      create: (context) => ShopCubit(),
+      child: BlocConsumer<ShopCubit, ShopState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          var cubit = ShopCubit.get(context);
+          return Scaffold(
+            appBar: AppBar(
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.language),
+                  onPressed: () => context.read<LocalCubit>().toggleLocale(),
+                ),
+              ],
+              title: Text(
+                AppLocalizations.of(context)!.ourProducts, // Localized
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: "Suwannaphum",
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              centerTitle: true,
+              backgroundColor: Colors.deepPurpleAccent,
+            ),
+            body: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  SizedBox(height: 20),
+                  Text(
+                    AppLocalizations.of(context)!.featuredProducts, // Localized
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: "Suwannaphum",
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                    height: 200,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        PageView.builder(
+                          controller: cubit.controller,
+                          scrollDirection: Axis.horizontal,
+                          onPageChanged: (index) {
+                            cubit.changePage(index);
+                          },
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: Image.network(
+                                  cubit.featuredImages[index],
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            );
+                          },
+                          itemCount: cubit.featuredImages.length,
+                        ),
+
+                        //next
+                        if (lang ? cubit.currentIndex > 0 : cubit.currentIndex < cubit.featuredImages.length - 1)
+                          Positioned(
+                            left: 8,
+                            child: ArrowButton(
+                              icon:lang ?Icons.arrow_forward_ios  : Icons.arrow_back_ios,
+                              onPressed:lang ?cubit.nextPage  : cubit.previousPage,
+                            ),
+                          ),
+                        //previous
+                        if (lang ? cubit.currentIndex < cubit.featuredImages.length - 1 : cubit.currentIndex > 0)
+                          Positioned(
+                            right: 8,
+                            child: ArrowButton(
+                              icon:lang ? Icons.arrow_back_ios : Icons.arrow_forward_ios,
+                              onPressed: lang ? cubit.previousPage :  cubit.nextPage,
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  SmoothPageIndicator(
+                    controller: cubit.controller,
+                    count: cubit.featuredImages.length,
+                    axisDirection: Axis.horizontal,
+                    effect: SlideEffect(
+                      spacing: 8.0,
+                      radius: 8.0,
+                      dotWidth: 15.0,
+                      dotHeight: 15.0,
+                      paintStyle: PaintingStyle.stroke,
+                      strokeWidth: 1.5,
+                      dotColor: Colors.grey,
+                      activeDotColor: Colors.indigo,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    AppLocalizations.of(context)!.shopOurCollection, // Localized
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontFamily: "Suwannaphum",
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.6,
+                    child: GridView.builder(
+                      itemCount: cubit.products.length,
+                      physics: BouncingScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 0.8,
+                      ),
+                      itemBuilder: (context, index) {
+                        return Card(
+                          elevation: 5,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: Column(
+                            children: [
+                              Expanded(
+                                child: Stack(
+                                  alignment: Alignment.topRight,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: const BorderRadius.vertical(
+                                        top: Radius.circular(15),
+                                      ),
+                                      child: Image.network(
+                                        cubit.products[index]['image'],
+                                        width: double.infinity,
+                                        height: double.infinity,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: CircleAvatar(
+                                        radius: 20,
+                                        backgroundColor:
+                                        Colors.deepPurpleAccent,
+                                        child: IconButton(
+                                          icon: Icon(
+                                            Icons.add_shopping_cart,
+                                            color: Colors.white,
+                                          ),
+                                          onPressed: () {
+                                            ScaffoldMessenger.of(
+                                              context,
+                                            ).showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  AppLocalizations.of(context)!.itemAddedToCart, // Localized
+                                                  style: TextStyle(
+                                                    fontFamily: "Suwannaphum",
+                                                    fontSize: 20,
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  cubit.products[index]['title'],
+                                  style: TextStyle(
+                                    fontFamily: "Suwannaphum",
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text(
+                      AppLocalizations.of(context)!.hotOffers, // Localized
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: "Suwannaphum",
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.35,
+                    child: ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      itemCount: cubit.hotOffers.length,
+                      itemBuilder: (context, index) => BuildOffers(
+                        image: cubit.hotOffers[index]['image'],
+                        desc: cubit.hotOffers[index]['desc'],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
